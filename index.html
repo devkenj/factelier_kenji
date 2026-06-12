@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>工場の人々 | Factelier (ファクトリエ)</title>
 <meta name="description" content="世界に誇る日本の工場。ファクトリエは厳選したメイドインジャパンの工場と直接提携しています。提携工場の物語と商品を日本地図から。">
+<link rel="icon" type="image/png" href="assets/site/logo_icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
@@ -17,8 +18,8 @@
   --en:'Cormorant Garamond',Georgia,serif;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:2;font-size:15px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+html{scroll-behavior:smooth;overflow-x:clip;max-width:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:2;font-size:15px;-webkit-font-smoothing:antialiased;overflow-x:clip;max-width:100%}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 ::selection{background:var(--accent);color:#fff}
@@ -29,11 +30,13 @@ a{color:inherit;text-decoration:none}
 /* header */
 header{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:22px 40px;transition:all .45s ease}
 header.solid{background:rgba(247,245,241,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:14px 40px}
-.brand{display:flex;flex-direction:column;line-height:1.35;cursor:pointer}
-.brand .en{font-family:var(--en);font-size:17px;letter-spacing:.42em;text-transform:uppercase}
+.brand{display:flex;flex-direction:column;gap:7px;line-height:1.35;cursor:pointer;align-items:flex-start}
+.brand .logo{height:19px;width:auto;transition:filter .45s ease}
 .brand .ja{font-family:var(--serif);font-size:11px;letter-spacing:.5em;color:var(--ink-2)}
-header.on-hero .brand .en, header.on-hero .brand .ja{color:#fff}
-header.solid .brand .en, header.solid .brand .ja{color:var(--ink)}
+header.on-hero .brand .logo{filter:brightness(0) invert(1)}
+header.on-hero .brand .ja{color:#fff}
+header.solid .brand .logo{filter:none}
+header.solid .brand .ja{color:var(--ink)}
 nav{display:flex;gap:34px;align-items:center}
 nav a{font-size:12px;letter-spacing:.26em;color:var(--ink-2);position:relative;padding-bottom:3px}
 header.on-hero nav a{color:rgba(255,255,255,.85)}
@@ -57,6 +60,7 @@ nav a:hover::after{width:100%}
 .hero-stats div:first-child{border-left:none}
 .hero-stats .num{font-family:var(--en);font-style:normal;font-size:34px;letter-spacing:.08em;line-height:1.2}
 .hero-stats .cap{font-size:11px;letter-spacing:.3em;color:rgba(255,255,255,.65)}
+@media(max-width:480px){.hero-stats div{padding:0 18px}.hero-stats .num{font-size:24px}.hero-stats .cap{font-size:10px;letter-spacing:.2em}.hero h1{letter-spacing:.1em}}
 .scroll-cue{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);z-index:2;color:rgba(255,255,255,.7);font-family:var(--en);font-size:11px;letter-spacing:.4em;text-transform:uppercase}
 .scroll-cue::after{content:"";display:block;width:1px;height:46px;background:rgba(255,255,255,.5);margin:10px auto 0;animation:drop 2.2s ease-in-out infinite}
 @keyframes drop{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
@@ -75,7 +79,7 @@ nav a:hover::after{width:100%}
 .section-head p{color:var(--mute);font-size:13px;letter-spacing:.2em;margin-top:16px}
 .map-wrap{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:start;padding:0 40px}
 @media(max-width:980px){.map-wrap{grid-template-columns:1fr;padding:0 22px}}
-.map-box{position:relative}
+.map-box{position:relative;overflow:hidden}
 .map-box svg{width:100%;height:auto;display:block}
 .prefecture polygon,.prefecture path{fill:#e9e6df;stroke:var(--white);stroke-width:.8;transition:fill .3s}
 .prefecture.has-f polygon,.prefecture.has-f path{fill:#b9c5d4;cursor:pointer}
@@ -88,6 +92,7 @@ nav a:hover::after{width:100%}
 .map-legend span::before{content:"";display:inline-block;width:10px;height:10px;margin-right:8px;vertical-align:-1px}
 .map-legend .l1::before{background:#b9c5d4}
 .map-legend .l2::before{background:#e9e6df}
+@media(hover:none){.map-tip{display:none}}
 
 /* side panel */
 .panel{border:1px solid var(--line);background:var(--paper);padding:38px 36px;min-height:520px}
@@ -192,7 +197,8 @@ nav a:hover::after{width:100%}
 
 /* footer */
 footer{background:var(--ink);color:#a39e93;padding:90px 40px 50px;text-align:center}
-footer .en{font-family:var(--en);font-size:20px;letter-spacing:.46em;color:#f1efe9;text-transform:uppercase}
+footer .flogo{height:22px;width:auto;margin:0 auto;filter:brightness(0) invert(1);opacity:.9}
+footer .fmij{height:11px;width:auto;margin:14px auto 0;filter:brightness(0) invert(1);opacity:.55}
 footer .ja{font-family:var(--serif);font-size:11px;letter-spacing:.5em;margin-top:10px}
 footer p{font-size:11.5px;letter-spacing:.16em;margin-top:34px;line-height:2.2}
 footer a{color:#d9d4c8;border-bottom:1px solid #555;padding-bottom:1px}
@@ -205,7 +211,7 @@ footer a:hover{color:#fff}
 
 <header id="hd" class="on-hero">
   <div class="brand" onclick="closeModal();window.scrollTo({top:0,behavior:'smooth'})">
-    <span class="en">Factelier</span>
+    <img class="logo" src="assets/site/factelier.png" alt="Factelier (ファクトリエ)">
     <span class="ja">工場の人々</span>
   </div>
   <nav>
@@ -489,7 +495,8 @@ footer a:hover{color:#fff}
 </section>
 
 <footer>
-  <div class="en">Factelier</div>
+  <img class="flogo" src="assets/site/factelier.png" alt="Factelier (ファクトリエ)">
+  <img class="fmij" src="assets/site/madeinjapan.png" alt="ALL MADE IN JAPAN">
   <div class="ja">語れるもので日々を豊かに</div>
   <p>本ページの文章・写真・動画は <a href="https://factelier.com/factory/" target="_blank" rel="noopener">factelier.com/factory</a> の工場紹介をもとに構成しています。<br>商品のご購入は各リンク先の factelier.com 商品ページにて。<br>© LIFESTYLE ACCENT INC. — Factory Stories Concept</p>
 </footer>
